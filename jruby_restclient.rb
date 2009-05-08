@@ -1,4 +1,5 @@
 require 'java'
+require File.dirname(__FILE__) + '/commons-logging-1.1.1.jar'
 require File.dirname(__FILE__) + '/commons-codec-1.3.jar'
 require File.dirname(__FILE__) + '/commons-httpclient-3.1.jar'
 
