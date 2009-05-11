@@ -1,4 +1,5 @@
 require 'java'
+
 require File.dirname(__FILE__) + '/commons-logging-1.1.1.jar'
 require File.dirname(__FILE__) + '/commons-codec-1.3.jar'
 require File.dirname(__FILE__) + '/commons-httpclient-3.1.jar'
@@ -7,7 +8,7 @@ require 'cgi'
 
 module JRestClient  
   class RequestTimeout < Exception; end
-	
+  	
   include_package 'org.apache.commons.httpclient'
   include_package 'org.apache.commons.httpclient.methods'
   include_package 'org.apache.commons.httpclient.params'    
@@ -16,12 +17,13 @@ module JRestClient
   include_class "org.apache.commons.httpclient.methods.GetMethod"
 
   class << self
-    attr_accessor :timeout
+    attr_accessor :timeout, :dont_follow_redirects    
   end
 
   def self.get(url, headers = {})
     client = get_client
     method = GetMethod.new(url)
+    method.follow_redirects = true unless self.dont_follow_redirects
     set_headers(method, headers)    
     make_request(client, method)
   end
@@ -67,8 +69,3 @@ module JRestClient
   end
   
 end
-
-
-
-
-
